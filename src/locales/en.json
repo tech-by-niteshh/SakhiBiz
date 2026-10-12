@@ -186,5 +186,25 @@
   "daysLabel": "days",
 
   "footerAboutText": "SakhiBiz is a regional e-learning platform empowering rural and semi-urban Indian women entrepreneurs with practical business skills and digital confidence.",
-  "copyrightText": "© 2026 SakhiBiz. All rights reserved. Grassroots Women Entrepreneurship Initiative."
+  "copyrightText": "© 2026 SakhiBiz. All rights reserved. Grassroots Women Entrepreneurship Initiative.",
+
+  "aboutHeroHeading": "About SakhiBiz",
+  "aboutHeroIntro": "SakhiBiz is a regional e-learning and grassroots business enablement platform dedicated to rural and semi-urban Indian women entrepreneurs. Our mission is to make practical financial literacy, secure digital payments, WhatsApp commerce, and micro-business management accessible to every aspiring entrepreneur in her preferred language.",
+  "aboutHeroCtaCourses": "Explore Courses",
+  "aboutHeroCtaTools": "Open Business Toolkit",
+  "aboutCompanyEyebrow": "Organisation & Initiative",
+  "aboutCompanyName": "ERAZONE PRIVATE LIMITED",
+  "aboutCompanyText": "Developed as part of the Erazone initiative, SakhiBiz brings its existing digital learning and business-support experience together in one platform.",
+  "aboutCompanySocialsHeading": "Connect with Erazone",
+  "aboutTeamHeading": "Our Team",
+  "aboutTeamSubtitle": "The dedicated individuals driving the technology, curriculum, operations, and support behind SakhiBiz.",
+  "role_developer": "Developer",
+  "role_moderator": "Moderator",
+  "role_manager": "Manager",
+  "role_researcher": "Researcher",
+  "role_team_lead": "Team Lead",
+  "aboutSupportHeading": "Need Help?",
+  "aboutSupportSubtitle": "Have a question or need assistance with SakhiBiz? Get in touch with our support team.",
+  "aboutSupportEmailLabel": "Official Support Email",
+  "aboutSupportButton": "Email Support Team"
 }

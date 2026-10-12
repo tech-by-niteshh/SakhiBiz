@@ -10,6 +10,7 @@ import { ToolkitPage } from './pages/ToolkitPage';
 import { AssistantPage } from './pages/AssistantPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { AdminPage } from './pages/AdminPage';
+import { AboutPage } from './pages/AboutPage';
 import { AuthModal } from './components/AuthModal';
 import { ProfileModal } from './components/ProfileModal';
 import { COURSES_DATA } from './data/courses';
@@ -26,12 +27,29 @@ import {
 } from './types';
 import { CloudOff, UserPlus } from 'lucide-react';
 
+const getTabFromPath = (path: string): string => {
+  const clean = path.replace(/\/$/, '').toLowerCase();
+  if (clean === '/about') return 'about';
+  if (clean === '/courses') return 'courses';
+  if (clean === '/tools') return 'tools';
+  if (clean === '/resources') return 'resources';
+  if (clean === '/assistant') return 'assistant';
+  if (clean === '/dashboard') return 'dashboard';
+  if (clean === '/admin') return 'admin';
+  return 'home';
+};
+
 export default function App() {
   const [currentLang, setCurrentLang] = useState<Language>(() => StorageService.getLanguage());
   const [user, setUser] = useState<UserProfile>(() => {
     return StorageService.getGuestUser() || StorageService.createGuestUser('hi');
   });
-  const [activeTab, setActiveTab] = useState<string>('home');
+  const [activeTab, setActiveTab] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      return getTabFromPath(window.location.pathname);
+    }
+    return 'home';
+  });
   const [selectedCourseId, setSelectedCourseId] = useState<string>('course-cost-pricing-profit');
 
   // Application data states
@@ -107,6 +125,41 @@ export default function App() {
       mounted = false;
     };
   }, [loadUserData, currentLang]);
+
+  // Handle browser back/forward buttons
+  useEffect(() => {
+    const handlePopState = () => {
+      setActiveTab(getTabFromPath(window.location.pathname));
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  // Update dynamic document title and meta description
+  useEffect(() => {
+    if (activeTab === 'about') {
+      document.title = 'About SakhiBiz | Erazone Private Limited';
+      let metaDesc = document.querySelector('meta[name="description"]');
+      if (!metaDesc) {
+        metaDesc = document.createElement('meta');
+        metaDesc.setAttribute('name', 'description');
+        document.head.appendChild(metaDesc);
+      }
+      metaDesc.setAttribute(
+        'content',
+        'Learn about SakhiBiz, a grassroots digital learning and business enablement platform developed as part of the Erazone initiative.'
+      );
+    } else {
+      document.title = 'SakhiBiz — Empowering Grassroots Women Entrepreneurs';
+      const metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) {
+        metaDesc.setAttribute(
+          'content',
+          'SakhiBiz empowers rural and semi-urban women entrepreneurs with practical business tools, digital literacy, and AI-powered mentorship.'
+        );
+      }
+    }
+  }, [activeTab]);
 
   // Language management
   const handleLanguageChange = async (lang: Language) => {
@@ -328,6 +381,12 @@ export default function App() {
       setSelectedCourseId(courseId);
     }
     setActiveTab(tab);
+    if (typeof window !== 'undefined') {
+      const targetPath = tab === 'home' ? '/' : `/${tab}`;
+      if (window.location.pathname !== targetPath) {
+        window.history.pushState({}, '', targetPath);
+      }
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -466,6 +525,13 @@ export default function App() {
         {activeTab === 'admin' && (
           <AdminPage
             user={user}
+            currentLang={currentLang}
+            onNavigate={handleNavigate}
+          />
+        )}
+
+        {activeTab === 'about' && (
+          <AboutPage
             currentLang={currentLang}
             onNavigate={handleNavigate}
           />

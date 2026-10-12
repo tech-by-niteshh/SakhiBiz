@@ -6,6 +6,8 @@ import app from '../src/server/app';
 const TEST_PORT = 3888;
 const BASE_URL = `http://127.0.0.1:${TEST_PORT}`;
 import { signToken } from '../src/server/auth';
+import { isMongoConfigured, connectMongo } from '../src/server/db';
+import { User } from '../src/server/models/User';
 
 function makeToken(userId: string, email: string, role: 'ADMIN' | 'MODERATOR' | 'USER') {
   return signToken({ userId, email, role, name: `Test ${role}` });
@@ -26,6 +28,30 @@ async function runIntegrationTests() {
     } else {
       console.error(`[FAIL] ${testName} ${detail ? `(${detail})` : ''}`);
       failed++;
+    }
+  }
+
+  // Ensure test accounts exist in MongoDB if database is live
+  if (isMongoConfigured()) {
+    try {
+      await connectMongo();
+      await User.findOneAndUpdate(
+        { normalizedEmail: 'learner@sakhibiz.org' },
+        { userId: 'usr-1', email: 'learner@sakhibiz.org', normalizedEmail: 'learner@sakhibiz.org', name: 'Test USER', role: 'USER', passwordHash: 'test', accountStatus: 'ACTIVE', emailVerified: true },
+        { upsert: true }
+      );
+      await User.findOneAndUpdate(
+        { normalizedEmail: 'moderator@sakhibiz.org' },
+        { userId: 'mod-1', email: 'moderator@sakhibiz.org', normalizedEmail: 'moderator@sakhibiz.org', name: 'Test MODERATOR', role: 'MODERATOR', passwordHash: 'test', accountStatus: 'ACTIVE', emailVerified: true },
+        { upsert: true }
+      );
+      await User.findOneAndUpdate(
+        { normalizedEmail: 'admin@sakhibiz.org' },
+        { userId: 'adm-1', email: 'admin@sakhibiz.org', normalizedEmail: 'admin@sakhibiz.org', name: 'Test ADMIN', role: 'ADMIN', passwordHash: 'test', accountStatus: 'ACTIVE', emailVerified: true },
+        { upsert: true }
+      );
+    } catch (e) {
+      console.warn('Test user seeding skipped:', e);
     }
   }
 
@@ -187,11 +213,18 @@ async function runIntegrationTests() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: 'test@example.com', password: 'password123' }),
     });
-    // When MONGODB_URI is absent, it returns 503 instead of crashing the server
-    assert(
-      loginAttempt.status === 503,
-      'POST /api/auth/login gracefully returns 503 when MONGODB_URI is unconfigured'
-    );
+    // When MONGODB_URI is configured, returns 401 for invalid credentials; when unconfigured, returns 503
+    if (isMongoConfigured()) {
+      assert(
+        loginAttempt.status === 401,
+        'POST /api/auth/login gracefully returns 401 for invalid credentials when MONGODB_URI is configured'
+      );
+    } else {
+      assert(
+        loginAttempt.status === 503,
+        'POST /api/auth/login gracefully returns 503 when MONGODB_URI is unconfigured'
+      );
+    }
 
     console.log('\n====================================================');
     console.log(`Integration Test Results: ${passed} Passed, ${failed} Failed`);
@@ -203,6 +236,7 @@ async function runIntegrationTests() {
   if (failed > 0) {
     process.exit(1);
   }
+  process.exit(0);
 }
 
 runIntegrationTests().catch((err) => {

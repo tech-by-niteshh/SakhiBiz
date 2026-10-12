@@ -12,6 +12,11 @@ export interface IUser extends Document {
   role: UserRole;
   accountStatus: AccountStatus;
   emailVerified: boolean;
+  otpHash?: string;
+  otpExpiresAt?: Date;
+  otpAttempts?: number;
+  otpLastSentAt?: Date;
+  otpPurpose?: 'VERIFY_EMAIL' | 'RESET_PASSWORD';
   businessCategory: string;
   businessStage: string;
   location: string;
@@ -66,6 +71,24 @@ const UserSchema = new Schema<IUser>(
     emailVerified: {
       type: Boolean,
       default: false,
+    },
+    otpHash: {
+      type: String,
+      select: false,
+    },
+    otpExpiresAt: {
+      type: Date,
+    },
+    otpAttempts: {
+      type: Number,
+      default: 0,
+    },
+    otpLastSentAt: {
+      type: Date,
+    },
+    otpPurpose: {
+      type: String,
+      enum: ['VERIFY_EMAIL', 'RESET_PASSWORD'],
     },
     businessCategory: {
       type: String,

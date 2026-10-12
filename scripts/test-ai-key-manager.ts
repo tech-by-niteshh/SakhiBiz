@@ -151,23 +151,49 @@ async function run() {
     // --------------------------------------------------------------------------
     console.log('\n--- Suite 4: Security & Role-Based Access Control (RBAC) ---');
 
+    const { isMongoConfigured, connectMongo } = await import('../src/server/db');
+    const { User } = await import('../src/server/models/User');
+
+    if (isMongoConfigured()) {
+      try {
+        await connectMongo();
+        await User.findOneAndUpdate(
+          { normalizedEmail: 'learner_ai_test@sakhibiz.org' },
+          { userId: 'usr_learner_test_1', email: 'learner_ai_test@sakhibiz.org', normalizedEmail: 'learner_ai_test@sakhibiz.org', name: 'Sunita Learner', role: 'USER', passwordHash: 'test', accountStatus: 'ACTIVE' },
+          { upsert: true }
+        );
+        await User.findOneAndUpdate(
+          { normalizedEmail: 'moderator_ai_test@sakhibiz.org' },
+          { userId: 'usr_mod_test_1', email: 'moderator_ai_test@sakhibiz.org', normalizedEmail: 'moderator_ai_test@sakhibiz.org', name: 'Content Moderator', role: 'MODERATOR', passwordHash: 'test', accountStatus: 'ACTIVE' },
+          { upsert: true }
+        );
+        await User.findOneAndUpdate(
+          { normalizedEmail: 'admin_ai_test@sakhibiz.org' },
+          { userId: 'usr_admin_test_1', email: 'admin_ai_test@sakhibiz.org', normalizedEmail: 'admin_ai_test@sakhibiz.org', name: 'Chief Admin', role: 'ADMIN', passwordHash: 'test', accountStatus: 'ACTIVE' },
+          { upsert: true }
+        );
+      } catch (e) {
+        console.warn('AI test user seeding skipped:', e);
+      }
+    }
+
     const adminToken = signToken({
       userId: 'usr_admin_test_1',
-      email: 'admin@sakhibiz.org',
+      email: 'admin_ai_test@sakhibiz.org',
       role: 'ADMIN',
       name: 'Chief Admin',
     });
 
     const moderatorToken = signToken({
       userId: 'usr_mod_test_1',
-      email: 'moderator@sakhibiz.org',
+      email: 'moderator_ai_test@sakhibiz.org',
       role: 'MODERATOR',
       name: 'Content Moderator',
     });
 
     const userToken = signToken({
       userId: 'usr_learner_test_1',
-      email: 'learner@sakhibiz.org',
+      email: 'learner_ai_test@sakhibiz.org',
       role: 'USER',
       name: 'Sunita Learner',
     });
@@ -257,6 +283,7 @@ async function run() {
     console.log('====================================================\n');
   } finally {
     server.close();
+    process.exit(0);
   }
 }
 

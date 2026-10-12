@@ -281,6 +281,7 @@ async function runAudit() {
   console.log('\n====================================================');
   console.log(`Production-Readiness Audit Complete: ${passedCount} Verifications Passed`);
   console.log('====================================================\n');
+  process.exit(0);
 }
 
 runAudit().catch((err) => {

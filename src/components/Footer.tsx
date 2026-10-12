@@ -7,7 +7,9 @@ import {
   BookOpen, 
   Calculator, 
   Sparkles, 
-  HelpCircle 
+  HelpCircle,
+  Info,
+  Mail
 } from 'lucide-react';
 import { Language } from '../types';
 import { getText } from '../utils/translations';
@@ -27,22 +29,51 @@ export const Footer: React.FC<FooterProps> = ({ currentLang, onNavigate, onOpenF
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Column 1: Brand & Mission */}
           <div>
-            <div className="flex items-center gap-2.5 mb-3">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#E07A5F] to-[#f4987e] flex items-center justify-center text-white font-serif font-bold text-xl">
-                स
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-10 h-10 rounded-xl bg-white p-1 flex items-center justify-center shadow-md overflow-hidden shrink-0">
+                <img
+                  src="/logo.png"
+                  alt="SakhiBiz Logo"
+                  className="w-full h-full object-contain"
+                />
               </div>
               <span className="font-serif text-2xl font-extrabold text-white">SakhiBiz</span>
             </div>
             <p className="text-sm text-[#C9D6CE] leading-relaxed mb-4">
               {getText('footerAboutText', currentLang)}
             </p>
-            <div className="inline-flex items-center gap-2 text-xs bg-[#1c3f30] px-3 py-1.5 rounded-lg border border-[#2d5c47] text-[#FFD5C8]">
+            <div className="inline-flex items-center gap-2 text-xs bg-[#1c3f30] px-3 py-1.5 rounded-lg border border-[#2d5c47] text-[#FFD5C8] mb-4">
               <Heart className="w-3.5 h-3.5 text-[#E07A5F] fill-current" />
               <span>
                 {currentLang === 'hi' 
                   ? 'महिला सशक्तिकरण एवं आत्मनिर्भर भारत की ओर' 
                   : 'Empowering Grassroots Women Entrepreneurs'}
               </span>
+            </div>
+
+            <div className="space-y-2 text-xs text-[#C9D6CE]">
+              <div>
+                <button
+                  type="button"
+                  id="footer-about-link"
+                  onClick={() => onNavigate('about')}
+                  className="inline-flex items-center gap-1.5 text-[#FFD5C8] hover:text-white transition-colors font-medium cursor-pointer"
+                >
+                  <Info className="w-3.5 h-3.5 text-[#E07A5F]" aria-hidden="true" />
+                  <span>{getText('navAbout', currentLang)} (Erazone Private Limited)</span>
+                </button>
+              </div>
+              <div className="flex items-center gap-1.5 text-xs text-[#A2B6AC]">
+                <Mail className="w-3.5 h-3.5 text-[#E07A5F] shrink-0" aria-hidden="true" />
+                <span>{currentLang === 'hi' ? 'सपोर्ट ईमेल:' : 'Support Email:'}</span>
+                <a
+                  href="mailto:support@sakhibiz.xyz"
+                  id="footer-support-email"
+                  className="text-white hover:text-[#FFD5C8] underline transition-colors"
+                >
+                  support@sakhibiz.xyz
+                </a>
+              </div>
             </div>
           </div>
 
@@ -204,6 +235,13 @@ export const Footer: React.FC<FooterProps> = ({ currentLang, onNavigate, onOpenF
               />
             )}
             <button 
+              onClick={() => onNavigate('about')}
+              className="hover:text-white transition-colors underline cursor-pointer"
+            >
+              {getText('navAbout', currentLang)}
+            </button>
+            <span>•</span>
+            <button
               onClick={onOpenFeedback}
               className="hover:text-white transition-colors underline"
             >

@@ -1,120 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SakhiBiz — Coming Soon</title>
-  <meta name="description" content="SakhiBiz is currently under development. Something meaningful is in the works." />
-  
-  <!-- Typography: Plus Jakarta Sans -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-          },
-          colors: {
-            subtle: {
-              50: '#fafafa',
-              100: '#f4f4f5',
-              200: '#e4e4e7',
-              400: '#a1a1aa',
-              500: '#71717a',
-              700: '#3f3f46',
-              900: '#18181b',
-            }
-          }
-        }
-      }
-    };
-  </script>
-</head>
-
-<body class="min-h-screen bg-[#fafaf9] text-subtle-900 font-sans flex flex-col justify-between antialiased selection:bg-rose-100 selection:text-rose-900">
-
-  <!-- Ambient light pattern -->
-  <div class="fixed inset-0 pointer-events-none -z-10 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,#000_60%,transparent_100%)] opacity-60"></div>
-
-  <!-- Header -->
-  <header class="w-full max-w-4xl mx-auto px-6 pt-10 sm:pt-14 flex items-center justify-between">
-    <div class="flex items-center gap-2.5">
-      <div class="w-8 h-8 rounded-lg bg-zinc-900 text-white flex items-center justify-center font-bold text-sm tracking-tight shadow-sm">
-        S
-      </div>
-      <span class="text-base font-semibold tracking-tight text-zinc-900">Sakhi<span class="text-rose-600">Biz</span></span>
-    </div>
-
-    <!-- Status pill -->
-    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-zinc-200 bg-white/80 backdrop-blur-sm text-xs font-medium text-zinc-600 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
-      <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-      In Development
-    </div>
-  </header>
-
-  <main class="w-full max-w-2xl mx-auto px-6 py-16 sm:py-24 flex-1 flex flex-col items-center justify-center text-center">
+<html lang="hi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SakhiBiz — Regional E-Learning & Growth Platform for Women Entrepreneurs</title>
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <link rel="apple-touch-icon" href="/logo.png" />
     
-    <span class="text-xs font-semibold uppercase tracking-widest text-zinc-400 mb-4">
-      Under Construction
-    </span>
-
-    <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-zinc-900 leading-[1.12]">
-      Something meaningful is in the works.
-    </h1>
-
-    <p class="mt-5 text-base sm:text-lg text-zinc-500 max-w-lg mx-auto font-normal leading-relaxed">
-      SakhiBiz is being carefully crafted. We are building a modern space dedicated to empowering businesses and seamless collaboration.
-    </p>
-
-    <!-- Minimalist Notify / Progress Box -->
-    <div class="mt-10 w-full max-w-md">
-      <form id="notify-form" onsubmit="event.preventDefault(); handleNotify();" class="flex flex-col sm:flex-row gap-2.5">
-        <input 
-          id="email-input"
-          type="email" 
-          required 
-          placeholder="Enter your email for updates..." 
-          class="flex-1 px-4 py-2.5 text-sm rounded-xl border border-zinc-200 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-400 transition placeholder:text-zinc-400 text-zinc-800"
-        />
-        <button 
-          type="submit" 
-          class="px-5 py-2.5 rounded-xl bg-zinc-900 text-white text-sm font-medium hover:bg-zinc-800 active:scale-[0.98] transition shadow-sm"
-        >
-          Notify Me
-        </button>
-      </form>
-
-      <!-- Confirmation message container -->
-      <div id="status-message" class="hidden mt-3 text-xs font-medium text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-lg py-2 px-3">
-        Thank you! We will keep you informed when we launch.
-      </div>
-    </div>
-
-  </main>
-
-  <footer class="w-full max-w-4xl mx-auto px-6 py-8 border-t border-zinc-200/60 flex flex-col sm:flex-row items-center justify-between text-xs text-zinc-400 gap-3">
-    <p>© <span id="year"></span> SakhiBiz. All rights reserved.</p>
-    <p class="font-normal text-zinc-400">Launching soon</p>
-  </footer>
-
-  <script>
-    // Set dynamic current year
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Form feedback handler
-    function handleNotify() {
-      const input = document.getElementById('email-input');
-      const message = document.getElementById('status-message');
-      if (input.value) {
-        input.value = '';
-        message.classList.remove('hidden');
-      }
-    }
-  </script>
-</body>
+    <!-- Typography: Plus Jakarta Sans, Hind, Rozha One, Tiro Devanagari Hindi -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Rozha+One&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet" />
+  </head>
+  <body class="min-h-screen bg-[#FBF9F5] text-[#242A27] antialiased selection:bg-[#E07A5F]/20 selection:text-[#122A20]">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>

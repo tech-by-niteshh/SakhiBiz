@@ -11,7 +11,8 @@ import {
   FileText, 
   LogOut,
   ChevronDown,
-  ShieldCheck
+  ShieldCheck,
+  Info
 } from 'lucide-react';
 import { Language, UserProfile } from '../types';
 import { t, getText } from '../utils/translations';
@@ -50,6 +51,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: 'assistant', label: getText('navAssistant', currentLang), icon: Sparkles, highlight: true },
     { id: 'dashboard', label: getText('navDashboard', currentLang), icon: Award },
     { id: 'resources', label: getText('navResources', currentLang), icon: FileText },
+    { id: 'about', label: getText('navAbout', currentLang), icon: Info },
     ...(isPrivileged
       ? [
           {
@@ -106,8 +108,12 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={() => handleNavClick('home')}
             className="flex items-center gap-3 cursor-pointer group"
           >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#E07A5F] to-[#f4987e] flex items-center justify-center text-white shadow-md transform group-hover:scale-105 transition-transform">
-              <span className="font-serif text-2xl font-bold tracking-tight">स</span>
+            <div className="w-11 h-11 rounded-xl bg-white p-1 flex items-center justify-center shadow-md transform group-hover:scale-105 transition-transform overflow-hidden shrink-0 border border-white/20">
+              <img
+                src="/logo.png"
+                alt="SakhiBiz Logo"
+                className="w-full h-full object-contain"
+              />
             </div>
             <div>
               <div className="flex items-center gap-1.5">
