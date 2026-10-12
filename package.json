@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "tsx server.ts",
-    "build": "vite build",
+    "build:client": "vite build",
+    "build:server": "esbuild src/server/app.ts --bundle --platform=node --format=esm --packages=external --outfile=api/index.js",
+    "build": "vite build && npm run build:server",
     "start": "tsx server.ts",
     "preview": "vite preview",
     "lint": "tsc --noEmit",
@@ -16,7 +18,8 @@
     "test:otp": "tsx scripts/test-otp-flow.ts",
     "test:i18n": "tsx scripts/test-i18n.ts",
     "test:about": "tsx scripts/test-about-page.ts",
-    "test": "tsx scripts/test-backend.ts && tsx scripts/test-integration.ts && tsx scripts/test-ai-key-manager.ts && tsx scripts/verify-ai-production-readiness.ts && tsx scripts/test-otp-flow.ts && tsx scripts/test-about-page.ts"
+    "test:bundle": "tsx scripts/test-api-bundle.ts",
+    "test": "tsx scripts/test-backend.ts && tsx scripts/test-integration.ts && tsx scripts/test-ai-key-manager.ts && tsx scripts/verify-ai-production-readiness.ts && tsx scripts/test-otp-flow.ts && tsx scripts/test-about-page.ts && tsx scripts/test-api-bundle.ts"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",
@@ -45,6 +48,7 @@
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "autoprefixer": "^10.4.21",
+    "esbuild": "^0.28.2",
     "tailwindcss": "^4.3.3",
     "tsx": "^4.21.0",
     "typescript": "^5.8.2"
