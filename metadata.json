@@ -1,0 +1,7 @@
+{
+  "name": "SakhiBiz - Regional E-Learning Platform for Women Entrepreneurs",
+  "description": "Accessible regional-language e-learning platform empowering rural and semi-urban women entrepreneurs with financial literacy, digital marketing, business planning, and practical micro-business tools.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+

@@ -1,0 +1,15 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+env
+env.*
+*.env
+data/*.enc.json
+data/**/*.enc.json
+.vercel/
+scratch_dom.txt
